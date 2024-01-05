@@ -47,4 +47,11 @@ class TeamController extends Controller
 
         return response()->json(null, 204);
     }
+
+    public function players(Team $team)
+    {
+        $players = $team->players;
+
+        return response()->json($players);
+    }
 }

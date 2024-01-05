@@ -19,7 +19,9 @@ class CreateGamesTable extends Migration
             $table->time('game_start');
             $table->time('game_end');
             $table->unsignedBigInteger('house_team_id');
+            $table->foreign('house_team_id')->references('id')->on('teams'); 
             $table->unsignedBigInteger('guest_team_id');
+            $table->foreign('guest_team_id')->references('id')->on('teams'); 
             $table->unsignedBigInteger('score_house_team')->default(0);
             $table->unsignedBigInteger('score_guest_team')->default(0);
             $table->timestamps();

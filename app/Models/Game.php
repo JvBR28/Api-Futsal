@@ -31,4 +31,14 @@ class Game extends Model
             'score_guest_team' => 'required|integer',
         ];
     }
+
+    public function houseTeam()
+    {
+        return $this->belongsTo(Team::class, 'house_team_id');
+    }
+
+    public function guestTeam()
+    {
+        return $this->belongsTo(Team::class, 'guest_team_id');
+    }
 }

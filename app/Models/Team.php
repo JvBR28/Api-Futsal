@@ -20,4 +20,9 @@ class Team extends Model
             'name' => 'required|string|unique:teams,name,' . $id,
         ];
     }
+
+    public function players()
+    {
+        return $this->hasMany(Player::class);
+    }
 }

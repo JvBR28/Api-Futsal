@@ -25,6 +25,7 @@ class PlayerController extends Controller
         $data = $request->validate([
             'name' => 'required|string',
             'shirt_number' => 'required|integer',
+            'team_id' => 'required',
         ]);
 
         $player = Player::create($data);

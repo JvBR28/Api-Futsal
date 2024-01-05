@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::apiResource('/teams', TeamController::class);
+Route::get('teams/{team}/players', [TeamController::class, 'players']);
 
 Route::apiResource('/players', PlayerController::class);
 
