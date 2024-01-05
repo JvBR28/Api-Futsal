@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Models\Game;
+use App\Models\Player;
 use App\Observers\GameObserver;
+use App\Observers\PlayerObserver;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -25,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Player::observe(PlayerObserver::class);
         Game::observe(GameObserver::class);
     }
 }
