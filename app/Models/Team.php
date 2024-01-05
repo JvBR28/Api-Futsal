@@ -8,4 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Team extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'points',
+    ];
+
+    public static function rules($id = null)
+    {
+        return [
+            'name' => 'required|string|unique:teams,name,' . $id,
+        ];
+    }
 }
