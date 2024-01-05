@@ -6,12 +6,7 @@ use App\Models\Player;
 
 class PlayerObserver
 {
-    public function creating(Player $player)
-    {
-        $this->checkShirtNumber($player);
-    }
-
-    public function updating(Player $player)
+    public function saving(Player $player)
     {
         $this->checkShirtNumber($player);
     }

@@ -47,7 +47,17 @@ class TeamController extends Controller
 
         try {
             $teams = Team::orderByDesc('points')->get();
-            return response()->json(['error' => false, 'message' => 'Classificação dos times:', 'data' => $teams], 200);
+
+            $teamsWithGoals = $teams->map(function ($team) {
+                return [
+                    'id' => $team->id,
+                    'name' => $team->name,
+                    'points' => $team->points,
+                    'total_goals' => $team->getTotalGoals(),
+                ];
+            });
+
+            return response()->json(['error' => false, 'message' => 'Classificação dos times:', 'data' => $teamsWithGoals], 200);
         } catch (\Exception $e) {
             Log::error('Erro ao obter a classificação dos times: ' . $e->getMessage());
             return response()->json(['error' => true, 'message' => 'Erro ao obter a classificação dos times.', 'data' => null], 500);

@@ -25,4 +25,12 @@ class Team extends Model
     {
         return $this->hasMany(Player::class);
     }
+
+    public function getTotalGoals()
+    {
+        $homeGoals = Game::where('house_team_id', $this->id)->sum('score_house_team');
+        $awayGoals = Game::where('guest_team_id', $this->id)->sum('score_guest_team');
+
+        return $homeGoals + $awayGoals;
+    }
 }
