@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Team;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class TeamController extends Controller
 {
@@ -53,5 +54,21 @@ class TeamController extends Controller
         $players = $team->players;
 
         return response()->json($players);
+    }
+
+    public function ranking()
+    {
+
+        Log::info('Entrou no método de ranking');
+
+        try {
+            $teams = Team::orderByDesc('points')->get();
+            return response()->json(['error' => false, 'message' => 'Classificação dos times:', 'data' => $teams], 200);
+        } 
+        catch (\Exception $e) 
+        {
+            Log::error('Erro ao obter a classificação dos times: ' . $e->getMessage());
+            return response()->json(['error' => true, 'message' => 'Erro ao obter a classificação dos times.', 'data' => null], 500);
+        }
     }
 }
