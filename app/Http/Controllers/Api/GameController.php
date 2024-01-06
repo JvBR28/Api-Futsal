@@ -14,19 +14,13 @@ class GameController extends Controller
         return response()->json($games);
     }
 
-    public function show($id)
-    {
-        $games = Game::findOrFail($id);
-        return response()->json($games);
-    }
-
     public function store(Request $request)
     {
         $data = $request->validate(Game::rules());
 
         $games = Game::create($data);
 
-        return response()->json($games, 201);
+        return response()->json(['message' => 'Partida criada com sucesso', 'data' => $games], 201);
     }
 
     public function update(Request $request, $id)
@@ -37,7 +31,7 @@ class GameController extends Controller
 
         $games->update($data);
 
-        return response()->json($games, 200);
+        return response()->json(['message' => 'Partida atualizada com sucesso', 'data' => $games], 200);
     }
 
     public function destroy($id)
@@ -45,6 +39,6 @@ class GameController extends Controller
         $games = Game::findOrFail($id);
         $games->delete();
 
-        return response()->json(null, 204);
+        return response()->json(['message' => 'Partida deletada com sucesso'], 200);
     }
 }

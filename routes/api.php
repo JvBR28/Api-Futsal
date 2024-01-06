@@ -23,6 +23,12 @@ Route::prefix('teams')->group(function () {
     Route::patch('/{id}', [\App\Http\Controllers\Api\TeamController::class, 'update']);
     Route::delete('/{id}', [\App\Http\Controllers\Api\TeamController::class, 'destroy']);
 
+
+
+    Route::prefix('list')->group(function () {
+        Route::get('/{id}', [\App\Http\Controllers\Api\TeamController::class, 'players']);
+    });
+
     Route::prefix('rankings')->group(function () {
         Route::get('/', [\App\Http\Controllers\Api\TeamController::class, 'rankings']);
     });

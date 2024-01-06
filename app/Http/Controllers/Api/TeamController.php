@@ -15,19 +15,13 @@ class TeamController extends Controller
         return response()->json($teams);
     }
 
-    public function show($id) 
-    {
-        $team = Team::findOrFail($id);
-        return response()->json($team);
-    }
-
     public function store(Request $request)
     {
         $data = $request->validate(Team::rules());
 
         $team = Team::create($data);
 
-        return response()->json($team, 201);
+        return response()->json(['message' => 'Time criado com sucesso', 'data' => $team], 201);
     }
 
     public function update(Request $request, $id)
@@ -38,7 +32,7 @@ class TeamController extends Controller
 
         $team->update($data);
 
-        return response()->json($team, 200);
+        return response()->json(['message' => 'Time atualizado com sucesso', 'data' => $team], 200);
     }
 
     public function rankings()
@@ -69,13 +63,17 @@ class TeamController extends Controller
         $team = Team::findOrFail($id);
         $team->delete();
 
-        return response()->json(null, 204);
+        return response()->json(['message' => 'Time deletado com sucesso'], 200);
     }
 
-    public function players(Team $team)
+    public function players($id)
     {
+        $team = Team::findOrFail($id);
         $players = $team->players;
-
-        return response()->json($players);
+    
+        return response()->json([
+            'message' => 'Time com seus jogadores',
+            'team' => $team,
+        ]);
     }
 }

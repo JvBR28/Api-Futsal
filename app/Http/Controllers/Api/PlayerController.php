@@ -14,12 +14,6 @@ class PlayerController extends Controller
         return response()->json($players);
     }
 
-    public function show($id)
-    {
-        $player = Player::findOrFail($id);
-        return response()->json($player);
-    }
-
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -30,7 +24,7 @@ class PlayerController extends Controller
 
         $player = Player::create($data);
 
-        return response()->json($player, 201);
+        return response()->json(['message' => 'Jogador criado com sucesso', 'data' => $player], 201);
     }
 
     public function update(Request $request, $id)
@@ -44,7 +38,7 @@ class PlayerController extends Controller
 
         $player->update($data);
 
-        return response()->json($player, 200);
+        return response()->json(['message' => 'Jogador atualizado com sucesso', 'data' => $player], 200);
     }
 
     public function destroy($id)
@@ -52,6 +46,6 @@ class PlayerController extends Controller
         $player = Player::findOrFail($id);
         $player->delete();
 
-        return response()->json(null, 204);
+        return response()->json(['message' => 'Jogador deletado com sucesso'], 200);
     }
 }
