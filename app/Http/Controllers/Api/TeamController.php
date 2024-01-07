@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\TeamRequest;
 use App\Models\Team;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -16,20 +15,20 @@ class TeamController extends Controller
         return response()->json($teams);
     }
 
-    public function store(TeamRequest $request)
+    public function store(Request $request)
     {
-        $data = $request->validated();
+        $data = $request->validate(Team::rules());
 
         $team = Team::create($data);
 
         return response()->json(['message' => 'Time criado com sucesso', 'data' => $team], 201);
     }
 
-    public function update(TeamRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $team = Team::findOrFail($id);
 
-        $data = $request->validated();
+        $data = $request->validate(Team::rules($id));
 
         $team->update($data);
 
@@ -69,7 +68,8 @@ class TeamController extends Controller
 
     public function players($id)
     {
-        $team = Team::with('players')->findOrFail($id);
+        $team = Team::findOrFail($id);
+        $players = $team->players;
     
         return response()->json([
             'message' => 'Time com seus jogadores',

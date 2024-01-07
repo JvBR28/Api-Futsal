@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\GameRequest;
 use App\Models\Game;
 use Illuminate\Http\Request;
 
@@ -15,24 +14,24 @@ class GameController extends Controller
         return response()->json($games);
     }
 
-    public function store(GameRequest $request)
+    public function store(Request $request)
     {
-        $data = $request->validated();
-    
-        $game = Game::create($data);
-    
-        return response()->json(['message' => 'Partida criada com sucesso', 'data' => $game], 201);
+        $data = $request->validate(Game::rules());
+
+        $games = Game::create($data);
+
+        return response()->json(['message' => 'Partida criada com sucesso', 'data' => $games], 201);
     }
 
-    public function update(GameRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        $game = Game::findOrFail($id);
-    
-        $data = $request->validated();
-    
-        $game->update($data);
-    
-        return response()->json(['message' => 'Partida atualizada com sucesso', 'data' => $game], 200);
+        $games = Game::findOrFail($id);
+
+        $data = $request->validate(Game::rules());
+
+        $games->update($data);
+
+        return response()->json(['message' => 'Partida atualizada com sucesso', 'data' => $games], 200);
     }
 
     public function destroy($id)
