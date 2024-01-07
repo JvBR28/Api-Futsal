@@ -69,8 +69,7 @@ class TeamController extends Controller
 
     public function players($id)
     {
-        $team = Team::findOrFail($id);
-        $players = $team->players;
+        $team = Team::with('players')->findOrFail($id);
     
         return response()->json([
             'message' => 'Time com seus jogadores',
