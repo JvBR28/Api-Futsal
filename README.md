@@ -1,64 +1,74 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+Api de Gerenciamento de Jogos de Futsal:
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Essa é a API de Futsal, API construída em Laravel. Está API permite o gerenciamento de jogadores, times, partidas e possui autenticação de usuários com o Laravel Sanctum.
 
-## About Laravel
+**Configuração:**
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Antes de começar a usar a API Laravel, siga as etapas a seguir para configurar o ambiente:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+1.	Clonar o repositório:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+    1.1	    Git clone https://github.com/JvBR28/Api-Futsal.git
 
-## Learning Laravel
+2.	Instalar dependências:	
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+    2.1.	Use no seu terminal o comando ```composer install```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+3.	Configurar Variáveis de Ambiente:
 
-## Laravel Sponsors
+    3.1.	Copie o arquivo ```.env.example```, crie um arquivo chamado ```.env``` cole o código dentro do ```.env``` e configure as seguintes variáveis de ambiente que correspondem a sua maquina:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+    3.2.	```DB_CONNECTION```, ```DB_HOST```, ```DB_PORT```, ```DB_DATABASE```, ```DB_USERNAME``` E ```DB_PASSWORD```.
 
-### Premium Partners
+4.	Executar Migrações:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+    4.1.	Use o comando no terminal: ```php artisan migrate```
 
-## Contributing
+5.	Iniciar o servidor de desenvolvimento:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+    5.1.	Use o comando no terminal: ```php artisan serve```
 
-## Code of Conduct
+**Endpoints:**
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-## Security Vulnerabilities
+**Register:**
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+POST: ```/api/register```: Cria um novo usuário
 
-## License
+**Login:**
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+POST ```/api/login```: realiza o login e gera um token para você utilizar nas rotar a seguir
+
+**Players:**
+
+GET ```/api/player```: Mostra todos os jogadores criados.
+
+POST ```/api/player```: Cria um novo jogador.
+
+PATCH ```/api/player/{id}```: Edita um jogador existente.
+
+DELETE ```/api/player/{id}```: Exclui um jogador.
+
+**Teams:**
+
+GET ```/api/teams```: Lista todos os times criados.
+
+GET ```/api/teams/rankings```: Lista times em ordem decrescente de pontos.
+
+GET ```/api/teams/list/{id}```: Lista times existente com todos os jogadores nele.
+
+POST ```/api/teams```: Cria um novo time.
+
+PATCH ```/api/teams/{id}```: Edita um time existente.
+
+DELETE ```/api/teams/{id}```: Exclui um time.
+
+**Games:**
+
+GET ```/api/games```: Lista todos as partidas.
+
+POST ```/api/games```: Cria uma nova partida.
+
+PATCH ```/api/games/{id}```: Edita uma partida existente.
+
+DELETE ```/api/games/{id}```: Deleta uma partida existente.
