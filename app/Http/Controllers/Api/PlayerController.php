@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PlayerRequest;
 use App\Models\Player;
 use Illuminate\Http\Request;
 
@@ -14,27 +15,20 @@ class PlayerController extends Controller
         return response()->json($players);
     }
 
-    public function store(Request $request)
+    public function store(PlayerRequest $request)
     {
-        $data = $request->validate([
-            'name' => 'required|string',
-            'shirt_number' => 'required|integer',
-            'team_id' => 'required',
-        ]);
+        $data = $request->validated();
 
         $player = Player::create($data);
 
         return response()->json(['message' => 'Jogador criado com sucesso', 'data' => $player], 201);
     }
 
-    public function update(Request $request, $id)
+    public function update(PlayerRequest $request, $id)
     {
         $player = Player::findOrFail($id);
 
-        $data = $request->validate([
-            'name' => 'string',
-            'shirt_number' => 'integer',
-        ]);
+        $data = $request->validated();
 
         $player->update($data);
 
