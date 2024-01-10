@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Builder\ReturnApi;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PlayerRequest;
 use App\Models\Player;
@@ -11,8 +12,7 @@ class PlayerController extends Controller
 {
     public function index()
     {
-        $players = Player::all();
-        return response()->json($players);
+        return response()->json(Player::all());
     }
 
     public function store(PlayerRequest $request)
@@ -21,7 +21,7 @@ class PlayerController extends Controller
 
         $player = Player::create($data);
 
-        return response()->json(['message' => 'Jogador criado com sucesso', 'data' => $player], 201);
+        return ReturnApi::Success('Jogador criado com sucesso', $player, 201);
     }
 
     public function update(PlayerRequest $request, $id)
@@ -32,7 +32,7 @@ class PlayerController extends Controller
 
         $player->update($data);
 
-        return response()->json(['message' => 'Jogador atualizado com sucesso', 'data' => $player], 200);
+        return ReturnApi::Success('Jogador atualizado com sucesso', $player);
     }
 
     public function destroy($id)
@@ -40,6 +40,6 @@ class PlayerController extends Controller
         $player = Player::findOrFail($id);
         $player->delete();
 
-        return response()->json(['message' => 'Jogador deletado com sucesso'], 200);
+        return ReturnApi::Success('Jogador deletado com sucesso', $player);
     }
 }

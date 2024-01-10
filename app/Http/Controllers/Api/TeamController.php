@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Builder\ReturnApi;
 use App\Http\Controllers\Controller;
 use App\Models\Team;
 use Illuminate\Http\Request;
@@ -11,8 +12,7 @@ class TeamController extends Controller
 {
     public function index()
     {
-        $teams = Team::all();
-        return response()->json($teams);
+        return response()->json(Team::all());
     }
 
     public function store(Request $request)
@@ -21,7 +21,7 @@ class TeamController extends Controller
 
         $team = Team::create($data);
 
-        return response()->json(['message' => 'Time criado com sucesso', 'data' => $team], 201);
+        return ReturnApi::Success('Time criado com sucesso', $team, 201);
     }
 
     public function update(Request $request, $id)
@@ -32,7 +32,7 @@ class TeamController extends Controller
 
         $team->update($data);
 
-        return response()->json(['message' => 'Time atualizado com sucesso', 'data' => $team], 200);
+        return ReturnApi::Success('Time atualizado com sucesso', $team);
     }
 
     public function rankings()
@@ -51,10 +51,10 @@ class TeamController extends Controller
                 ];
             });
 
-            return response()->json(['error' => false, 'message' => 'Classificação dos times:', 'data' => $teamsWithGoals], 200);
+            return ReturnApi::Success('Ranking dos Times:', $teamsWithGoals);
         } catch (\Exception $e) {
             Log::error('Erro ao obter a classificação dos times: ' . $e->getMessage());
-            return response()->json(['error' => true, 'message' => 'Erro ao obter a classificação dos times.', 'data' => null], 500);
+            return ReturnApi::Error('Erro ao obter a classificação dos times.', null, $e->getMessage(), 500);
         }
     }
 
@@ -63,17 +63,15 @@ class TeamController extends Controller
         $team = Team::findOrFail($id);
         $team->delete();
 
-        return response()->json(['message' => 'Time deletado com sucesso'], 200);
+        return ReturnApi::Success('Time deletado com sucesso', $team);
     }
 
     public function players($id)
     {
         $team = Team::findOrFail($id);
-        $players = $team->players;
+        $team->players;
     
-        return response()->json([
-            'message' => 'Time com seus jogadores',
-            'team' => $team,
-        ]);
+        return ReturnApi::Success('Time com seus jogadores:', ['team' => $team]);
+
     }
 }

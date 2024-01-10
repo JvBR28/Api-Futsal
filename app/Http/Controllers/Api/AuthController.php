@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Builder\ReturnApi;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
@@ -21,7 +22,7 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        return response()->json(['message' => 'Usuário registrado com sucesso', 'user' => $user]);
+        return ReturnApi::Success('Usuário registrado com sucesso', $user);
     }
 
     public function login(LoginRequest $request)
@@ -35,6 +36,8 @@ class AuthController extends Controller
         }
 
         $token = $user->createToken('auth_token')->plainTextToken;
+
+        return ReturnApi::Success('Login bem-sucedido', ['token' => $token, 'user' => $user]);
 
         return response()->json(['token' => $token, 'user' => $user]);
     }
